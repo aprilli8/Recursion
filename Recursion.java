@@ -120,6 +120,19 @@ public class Recursion {
     return 0;
   }
 
+  /*
+  * OPTIONAL problem:
+  * give all possible English words (from Lexicon lex) that correspond to
+  * the numbers given in digitSequence
+  * pre:
+  * post:
+  */
+  public static void listCompletions(String digitSequence, Lexicon lex){
+  }
+
+
+  public static void helperListCompletions(String remaining, Lexicon lex, String soFar){
+  }
 
   /**************************************************************/
 
