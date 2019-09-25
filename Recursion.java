@@ -52,7 +52,6 @@ public class Recursion {
   * post:
   * Big-O runtime:
   */
-//empty string counts as palindrome right?
   public static boolean isPalindrome(String str) {
     if(str.length() == 0 || str.length() == 1){
       return true;
@@ -98,7 +97,7 @@ public class Recursion {
   * post:
   * Big-O runtime:
   */
-  public static void substrings(String str) {
+/*  public static void substrings(String str) {
     if(str.length() == 0){
       System.out.print("\"\"");
     }
@@ -117,6 +116,19 @@ public class Recursion {
       substrings(str.substring(1));
     }
   }
+*/
+  public static void substrings(String str) {
+    if(str.length() == 0){
+      System.out.print("\"\"");
+    }
+    else{
+      System.out.print("\"" + str.charAt(0) + "\", ");
+      for(int i = 0; i < str.length(); i++){
+
+      }
+      substrings(str.substring(1));
+    }
+  }
 
   /*
   * Helper method for substrings(String str)
@@ -127,7 +139,6 @@ public class Recursion {
   * post:
   * Big-O runtime:
   */
-//do we have to use the helper method?
   public static void substringHelper(String str, String soFar) {
 
   }
@@ -142,25 +153,14 @@ public class Recursion {
   * Big-O runtime:
   */
   public static void printInBinary(int number) {
-    int mult = 1;
-    while(mult < (number/2)+1){
-      mult = mult*2;
-    }
-    if(mult == 1){
-      System.out.print(number%2);
+    if(number <= 1){
+      System.out.print(number);
     }
     else{
-      if(mult <= number){
-        System.out.print(1);
-        printInBinary(mult/2);
-      }
-      else{
-        System.out.print(0);
-      }
-      //printInBinary(number-((mult/2)+mult));
+      printInBinary(number/2);
+      System.out.print(number%2);
     }
   }
-
 
   /*****  6  ***************************************************/
 
@@ -174,7 +174,26 @@ public class Recursion {
   * Big-O runtime:
   */
   public static boolean printSubSetSum(int nums[], int targetSum) {
-    return false;
+    if(nums.length == 0){
+      return false;
+    }
+    else{
+      for(int i = 1; i < nums.length; i++){
+        if(nums[0]+nums[i] == targetSum){
+          System.out.println("[" + nums[0] + ", " + nums[i] + "]");
+          return true;
+        }
+        else if(nums[0] == targetSum){
+          System.out.println("[" + nums[0] + "]");
+          return true;
+        }
+        else if(nums[i] == targetSum){
+          System.out.println("[" + nums[i] + "]");
+          return true;
+        }
+      }
+      return canMakeSum(Arrays.copyOfRange(nums,1,nums.length), targetSum);
+    }
   }
 
 
@@ -223,7 +242,7 @@ public class Recursion {
     System.out.println(isPalindrome(""));
     System.out.println(isPalindrome("youth"));
     System.out.println(isPalindrome("deeded"));
-    System.out.println(isPalindrome("level"));
+    System.out.println(isPalindrome("dood"));
     System.out.println(isPalindrome("ablewasIereIsawelba"));
 
     System.out.println(isBalanced("[{[()()]}]")); //true
@@ -239,7 +258,9 @@ public class Recursion {
     System.out.println();
     substrings("");
     System.out.println();
-*/
+    substrings("Recursion");
+    System.out.println();
+
     printInBinary(1);
     System.out.println();
     printInBinary(2);
@@ -252,11 +273,9 @@ public class Recursion {
     System.out.println();
     printInBinary(6);
     System.out.println();
-/*    printInBinary(0);
+    printInBinary(0);
     System.out.println();
     printInBinary(30);
-    System.out.println();
-    printInBinary(1);
     System.out.println();
     printInBinary(110);
     System.out.println();
@@ -264,21 +283,23 @@ public class Recursion {
     System.out.println();
     printInBinary(43);
     System.out.println();
-
+*/
     int[] numSet = {2, 5, 7, 12, 16, 21, 30};
-    System.out.println(canMakeSum(numSet, -1));
+/*    System.out.println(canMakeSum(numSet, -1));
     System.out.println(canMakeSum(numSet, 19));
     System.out.println(canMakeSum(numSet, 100));
     System.out.println(canMakeSum(numSet, 21));
     System.out.println(canMakeSum(numSet, 22));
     System.out.println(canMakeSum(numSet, 3));
     System.out.println(canMakeSum(numSet, 30));
-/*
+*/
     System.out.println(printSubSetSum(numSet, 21));
+    System.out.println(printSubSetSum(numSet, 19));
     System.out.println(printSubSetSum(numSet, 22));
     System.out.println(printSubSetSum(numSet, 3));
-    System.out.println(printSubSetSum(numSet, 30));
-
+    System.out.println(printSubSetSum(numSet, 28));
+    //System.out.println(printSubSetSum(numSet, 30));
+/*
     System.out.println(countSubSetSumSolutions(numSet, 21));
     System.out.println(countSubSetSumSolutions(numSet, 22));
     System.out.println(countSubSetSumSolutions(numSet, 3));
