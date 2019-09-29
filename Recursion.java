@@ -1,3 +1,5 @@
+//I am the sole author of the work in this repository.
+
 /*
 * Recursion.java
 *
@@ -27,10 +29,11 @@ public class Recursion {
   /*****  1  ***************************************************/
 
   /*
-  * Return number of cannoballs in pyramid with the given `height`.
-  * pre:
-  * post:
-  * Big-O runtime:
+  * Return number of cannonballs in pyramid with the given `height`.
+  * pre: height is a postive integer
+  * post: returns sum of all cannonballs in each level of the pyramid
+  * Big-O runtime: O(n) because there are only O(n) type executions in the method,
+  such as the if loop that can run at most the number of times the method is called.
   */
   public static int countCannonballs(int height) {
     int sum = 0;
@@ -48,9 +51,11 @@ public class Recursion {
 
   /*
   * Return true if `str` is a palindrome.
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: str is a valid String
+  * post: returns true if str is a palindrome and false if it is not
+  * Big-O runtime: O(n^2) because the method recursively calls itself, which is
+  a O(n) execution, using a substring of str every time, which is an O(n) execution
+  as well. Overall then, the method ends up being O(n^2).
   */
   public static boolean isPalindrome(String str) {
     if(str.length() == 0 || str.length() == 1){
@@ -70,9 +75,11 @@ public class Recursion {
   * Return true if `str` is a string of matched parens,
   * brackets, and braces.
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: str is a valid String consisting of only bracketing operators (), [], and {}
+  * post: returns true if bracketing operators in str are balanced and false if they are unbalanced
+  * Big-O runtime: O(n^2) because the method recursively calls itself n times,
+  which is of O(n), and uses substrings in the calls each time, which is also
+  of O(n). Overall, the method is then of O(n^2).
   */
   public static boolean isBalanced(String str) {
     if(str.length() == 0){
@@ -93,41 +100,13 @@ public class Recursion {
   /*
   * Print all substrings of `str`.  (Order does not matter.)
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: str is a valid String
+  * post: prints out all possible substrings made of letters in str
+  * Big-O runtime: O(2^n); it should be the same order as substringHelper
+  because this method only calls it once.
   */
-/*  public static void substrings(String str) {
-    if(str.length() == 0){
-      System.out.print("\"\"");
-    }
-    else{
-      System.out.print("\"" + str.charAt(0) + "\", ");
-      if(str.length() > 1){
-        for(int i = 1; i < str.length(); i++){
-          System.out.print("\"" + str.charAt(0) + str.charAt(i) + "\", ");
-        }
-      }
-      if(str.length() > 2){
-        for(int i = 2; i < str.length(); i++){
-          System.out.print("\"" + str.substring(0,i+1) + "\", ");
-        }
-      }
-      substrings(str.substring(1));
-    }
-  }
-*/
   public static void substrings(String str) {
-    if(str.length() == 0){
-      System.out.print("\"\"");
-    }
-    else{
-      System.out.print("\"" + str.charAt(0) + "\", ");
-      for(int i = 0; i < str.length(); i++){
-
-      }
-      substrings(str.substring(1));
-    }
+    substringHelper(str, "");
   }
 
   /*
@@ -135,12 +114,20 @@ public class Recursion {
   * `soFar` keeps track of the characters currently in the substring
   *   being built
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: str and soFar are valid Strings
+  * post: builds all substrings from str
+  * Big-O runtime: O(2^n) because since there are two possible states of
+  whether or not to include a letter in each run of the method, which needs to
+  be run n times, the method has to be of O(2^n).
   */
   public static void substringHelper(String str, String soFar) {
-
+    if(str.length() == 0){
+      System.out.print("\"" + soFar + "\" ");
+    }
+    else{
+      substringHelper(str.substring(1), soFar+str.substring(0,1));
+      substringHelper(str.substring(1), soFar);
+    }
   }
 
   /*****  5  ***************************************************/
@@ -148,9 +135,10 @@ public class Recursion {
   /*
   * Print `number` in binary
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: number is a non-negative integer
+  * post: prints out the binary number corresponding to the decimal number
+  * Big-O runtime: O(n) because the only execution larger than O(1) is the
+  method's recursive call to itself, which is O(n).
   */
   public static void printInBinary(int number) {
     if(number <= 1){
@@ -167,11 +155,14 @@ public class Recursion {
 
   /*
   * Return whether a subset of the numbers in nums add up to sum,
-  * and print them out.
+  * and prints them out.
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: nums[] is an array of integers and targetSum is an integer
+  * post: returns true if any one or two numbers in nums array adds up to equal targetSum
+  * Big-O runtime: O(n^2) because the method runs recursive calls to itself,
+  which is of O(n), where in each call it creates and copies over a new array
+  that includes one less element, which is O(n) as well. Overall, the method is
+  then of O(n^2).
   */
   public static boolean printSubSetSum(int nums[], int targetSum) {
     if(nums.length == 0){
@@ -179,20 +170,16 @@ public class Recursion {
     }
     else{
       for(int i = 1; i < nums.length; i++){
-        if(nums[0]+nums[i] == targetSum){
-          System.out.println("[" + nums[0] + ", " + nums[i] + "]");
-          return true;
-        }
-        else if(nums[0] == targetSum){
+        if(nums[0] == targetSum){
           System.out.println("[" + nums[0] + "]");
           return true;
         }
-        else if(nums[i] == targetSum){
-          System.out.println("[" + nums[i] + "]");
+        else if(nums[0]+nums[i] == targetSum){
+          System.out.println("[" + nums[0] + ", " + nums[i] + "]");
           return true;
         }
       }
-      return canMakeSum(Arrays.copyOfRange(nums,1,nums.length), targetSum);
+      return printSubSetSum(Arrays.copyOfRange(nums,1,nums.length), targetSum);
     }
   }
 
@@ -201,12 +188,30 @@ public class Recursion {
   * Return the number of different ways elements in nums can be
   * added together to equal sum (you do not need to print them all).
   *
-  * pre:
-  * post:
-  * Big-O runtime:
+  * pre: nums[] is an array of integers and targetSum is an integer
+  * post: returns an integer which is a count of all possible combinations of integers in nums[] that add to targetSum
+  * Big-O runtime: O(n^2) because the method runs recursive calls to itself,
+  which is of O(n), where in each call it creates and copies over a new array
+  that includes one less element, which is O(n) as well. Overall, the method is
+  then of O(n^2).
   */
   public static int countSubSetSumSolutions(int nums[], int targetSum) {
-    return 0;
+    int count = 0;
+    if(nums.length == 0){
+      return count;
+    }
+    else{
+      if(nums[0] == targetSum){
+        count++;
+      }
+      for(int i = 1; i < nums.length; i++){
+        if(nums[0]+nums[i] == targetSum){
+          count++;
+        }
+      }
+      count+=countSubSetSumSolutions(Arrays.copyOfRange(nums,1,nums.length), targetSum);
+    }
+    return count;
   }
 
   /*
@@ -233,7 +238,7 @@ public class Recursion {
 
     // Please add your own tests to supplement these
     // Not all cases are thoroughly checked!!!
-/*
+
     System.out.println(countCannonballs(7));
     System.out.println(countCannonballs(3));
     System.out.println(countCannonballs(10));
@@ -245,12 +250,14 @@ public class Recursion {
     System.out.println(isPalindrome("dood"));
     System.out.println(isPalindrome("ablewasIereIsawelba"));
 
-    System.out.println(isBalanced("[{[()()]}]")); //true
-    System.out.println(isBalanced("[{[(){(})]}]")); //false
-    System.out.println(isBalanced("[{[()()]}][{[()()]}]")); //true
-    System.out.println(isBalanced("[{[()()]}{]{[()()]}]")); //false
+    System.out.println(isBalanced("[{[()()]}]"));
+    System.out.println(isBalanced("[{[(){(})]}]"));
+    System.out.println(isBalanced("[{[()()]}][{[()()]}]"));
+    System.out.println(isBalanced("[{[()()]}{]{[()()]}]"));
 
     substrings("abc");
+    System.out.println();
+    substrings("hello");
     System.out.println();
     substrings("CSCI136");
     System.out.println();
@@ -283,27 +290,28 @@ public class Recursion {
     System.out.println();
     printInBinary(43);
     System.out.println();
-*/
+
     int[] numSet = {2, 5, 7, 12, 16, 21, 30};
-/*    System.out.println(canMakeSum(numSet, -1));
+    System.out.println(canMakeSum(numSet, -1));
     System.out.println(canMakeSum(numSet, 19));
     System.out.println(canMakeSum(numSet, 100));
     System.out.println(canMakeSum(numSet, 21));
     System.out.println(canMakeSum(numSet, 22));
     System.out.println(canMakeSum(numSet, 3));
     System.out.println(canMakeSum(numSet, 30));
-*/
+
     System.out.println(printSubSetSum(numSet, 21));
     System.out.println(printSubSetSum(numSet, 19));
     System.out.println(printSubSetSum(numSet, 22));
     System.out.println(printSubSetSum(numSet, 3));
     System.out.println(printSubSetSum(numSet, 28));
-    //System.out.println(printSubSetSum(numSet, 30));
-/*
+    System.out.println(printSubSetSum(numSet, 30));
+
+    System.out.println(countSubSetSumSolutions(numSet, 17));
     System.out.println(countSubSetSumSolutions(numSet, 21));
     System.out.println(countSubSetSumSolutions(numSet, 22));
-    System.out.println(countSubSetSumSolutions(numSet, 3));
+    System.out.println(countSubSetSumSolutions(numSet, 2));
     System.out.println(countSubSetSumSolutions(numSet, 30));
-*/
+    System.out.println(countSubSetSumSolutions(numSet, -3));
   }
 }
