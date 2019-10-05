@@ -35,7 +35,8 @@ public class Recursion {
   * Big-O runtime: O(n) because there are only O(n) type executions in the method,
   such as the if loop that can run at most the number of times the method is called.
   */
-  public static int countCannonballs(int height) {
+    //$ Precondition that height>0 is useful, but an explicit Assert or logic check in your method is safer to actually stop bad input
+    public static int countCannonballs(int height) {
     int sum = 0;
     if(height == 1){
       sum += 1;
@@ -61,6 +62,7 @@ public class Recursion {
     if(str.length() == 0 || str.length() == 1){
       return true;
     }
+    //$ You could easily make this O(n) time by using a helper to keep front and back indexes instead of substringing every time. You can also use String.charAt(index) instead of String.substring(start,end)
     else if(str.substring(0,1).equals(str.substring(str.length()-1))){
       return isPalindrome(str.substring(1,str.length()-1));
     }
@@ -81,6 +83,8 @@ public class Recursion {
   which is of O(n), and uses substrings in the calls each time, which is also
   of O(n). Overall, the method is then of O(n^2).
   */
+
+    //$ You're calling this method n/2 times. In each call, you may iterate through all (str.len) characters in your string, which will be n/2 ammortized over all calls. At each of those characters, you take substrings which is ostensibly an O(str.len) operations. Therefore, this implementation is O(n^3) rather than O(n^2). You won't lose any points for this, but there analysis could be tighter in the future! You could also make this implementation cleaner by using String.indexOf("()")..... instead of searching for each substring :)
   public static boolean isBalanced(String str) {
     if(str.length() == 0){
       return true;
@@ -120,11 +124,14 @@ public class Recursion {
   whether or not to include a letter in each run of the method, which needs to
   be run n times, the method has to be of O(2^n).
   */
+
+    //$ This is O(n2^n) instead of O(2^n), because each of your calls also uses String.substring which itself is O(n).
   public static void substringHelper(String str, String soFar) {
     if(str.length() == 0){
       System.out.print("\"" + soFar + "\" ");
     }
     else{
+	//$ Great work here! Again, you can get the first chat with String.charAt(0) instead of String.substring. Further, you can keep a String index instead of taking substrings, which would improve the runtime of your program :)
       substringHelper(str.substring(1), soFar+str.substring(0,1));
       substringHelper(str.substring(1), soFar);
     }
@@ -145,6 +152,7 @@ public class Recursion {
       System.out.print(number);
     }
     else{
+	//$ elegant :) 
       printInBinary(number/2);
       System.out.print(number%2);
     }
@@ -164,6 +172,9 @@ public class Recursion {
   that includes one less element, which is O(n) as well. Overall, the method is
   then of O(n^2).
   */
+
+    //$ (-2) Here, you only check summations of one or two nums.
+    //$ e.g. you try nums[0] + nums[1], then you try nums[0] + nums[2], but you never try nums[0] + nums[1] + nums[2] ... etc.
   public static boolean printSubSetSum(int nums[], int targetSum) {
     if(nums.length == 0){
       return false;
@@ -195,6 +206,8 @@ public class Recursion {
   that includes one less element, which is O(n) as well. Overall, the method is
   then of O(n^2).
   */
+
+    //$ Same issue as above [-1]. I added a test case down in main, and you see {1, 2, 3, 4} returns no to (nums, 8), despite 1+3+4=8
   public static int countSubSetSumSolutions(int nums[], int targetSum) {
     int count = 0;
     if(nums.length == 0){
@@ -313,5 +326,10 @@ public class Recursion {
     System.out.println(countSubSetSumSolutions(numSet, 2));
     System.out.println(countSubSetSumSolutions(numSet, 30));
     System.out.println(countSubSetSumSolutions(numSet, -3));
+
+    //$ int[] sums = {1, 2, 3, 4};
+    //$ System.out.println(countSubSetSumSolutions(sums, 5));
+    //$ System.out.println(countSubSetSumSolutions(sums, 8));
+		       
   }
 }
