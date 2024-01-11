@@ -1,3 +1,3 @@
-# Lab 3 - Recursion
+# Recursion
 
-In this lab, we solve a variety of algorithmic problems and practice writing recursive problems.
+Here, I solve a variety of algorithmic problems and practice writing recursive problems.
